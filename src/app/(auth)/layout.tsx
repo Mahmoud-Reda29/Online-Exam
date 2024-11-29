@@ -1,9 +1,12 @@
-import React from 'react'
+// src/app/(auth)/layout.tsx
+import React from "react";
+import AuthLayout from "../Components/auth/AuthLayout";
 
-function layout() {
-  return (
-    <div>layout</div>
-  )
+
+export default function AuthPageLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <AuthLayout>{children}</AuthLayout>;
 }
-
-export default layout
