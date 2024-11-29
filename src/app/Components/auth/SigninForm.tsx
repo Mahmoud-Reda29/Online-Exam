@@ -1,10 +1,17 @@
 // src/components/auth/SignInForm.tsx
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import OAuthButtons from "./OAuthButtons";
+import NavigationButtons from "./NavigationButtons";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const SignInForm: React.FC = () => {
+  const [showPassword, setShowPassword] = useState(false);
   return (
-    <div className="w-full max-w-md bg-white rounded-lg shadow-md p-12">
+    <div className="w-full first-line:max-w-md bg-white rounded-lg  p-10">
+      <div className="flex justify-end mb-4">
+        <NavigationButtons />
+      </div>
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">Sign in</h2>
       <form className="space-y-4">
         <div>
@@ -22,7 +29,7 @@ const SignInForm: React.FC = () => {
           />
         </div>
 
-        <div>
+        <div className="mb-4 relative">
           <label
             htmlFor="password"
             className="block text-sm font-medium text-gray-700"
@@ -30,17 +37,23 @@ const SignInForm: React.FC = () => {
             Password
           </label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
-            placeholder="••••••••"
-            className="w-full mt-1 px-4 py-2 border rounded-md shadow-sm focus:ring-main focus:border-main"
+            className={`mt-1 w-full p-2 pr-10 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none`}
+            placeholder="Enter Password"
           />
-          <a
-            href="#"
-            className="text-sm text-main hover:underline float-right mt-2"
+          {/* Eye Icon */}
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute inset-y-0 top-5 right-3 flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
           >
-            Recover Password?
-          </a>
+            {showPassword ? (
+              <FiEyeOff className="w-5 h-5" />
+            ) : (
+              <FiEye className="w-5 h-5" />
+            )}
+          </button>
         </div>
 
         <button

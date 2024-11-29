@@ -1,9 +1,13 @@
 // src/components/auth/SignUpForm.tsx
 import React from "react";
+import NavigationButtons from "./NavigationButtons";
 
 const SignUpForm: React.FC = () => {
   return (
     <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+       <div className="flex justify-end mb-4">
+        <NavigationButtons />
+      </div>
       <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
         Sign up
       </h2>
