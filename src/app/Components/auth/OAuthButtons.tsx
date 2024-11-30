@@ -10,7 +10,7 @@ const OAuthButtons = () => {
   ];
 
   return (
-    <div className="flex justify-center items-center gap-4 p-4">
+    <div className="flex justify-center items-center gap-4 p-2">
       {providers.map((provider) => (
         <a
           key={provider.name}

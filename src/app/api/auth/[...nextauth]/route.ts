@@ -1,7 +1,10 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import axios from "axios";
 
-export default NextAuth({
+// Configure NextAuth options
+export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -10,34 +13,38 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const { email, password } = credentials as {
-          email: string;
-          password: string;
-        };
-        console.log(email, password);
-        const res = await fetch(
-          "https://exam.elevateegy.com/api/v1/auth/signin",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email,
-              password,
-            }),
-          }
-        );
-
-        const user = await res.json();
-
-        if (res.ok && user) {
-          return user;
+        if (!credentials) {
+          throw new Error("Missing credentials");
         }
-        return null;
+
+        try {
+          const response = await axios.post("https://exam.elevateegy.com/api/v1/auth/signin", {
+            email: credentials.email,
+            password: credentials.password,
+          });
+
+          const user = response.data;
+
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          // Return the user object, which will be available in the session
+          return user;
+        } catch (error: any) {
+          const errorMessage = error.response?.data?.message || "Invalid credentials";
+          throw new Error(errorMessage);
+        }
       },
     }),
   ],
   pages: {
-    signIn: "/signin",
+    signIn: "/signin", // Custom sign-in page
+    error: "/signin",  // Redirect to sign-in page on errors
   },
-  secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+const handler = NextAuth(authOptions);
+
+// Route handlers for Next.js API
+export { handler as GET, handler as POST };

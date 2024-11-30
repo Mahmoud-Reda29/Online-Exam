@@ -7,7 +7,7 @@ type AuthLayoutProps = {
 
 const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
       <div className="flex flex-col items-center justify-center bg-[#F0F4FC] p-8 shadow-2xl rounded-tr-[100px] rounded-br-[100px]">
         <div className="items-start font-poppins">
           <h1 className="text-5xl font-semibold font-poppins leading-tight">
