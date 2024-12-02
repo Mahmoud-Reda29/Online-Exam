@@ -3,7 +3,7 @@ import { signIn } from 'next-auth/react';
 import { FaGoogle, FaTwitter, FaFacebookF, FaGithub } from 'react-icons/fa';
 
 interface OAuthButtonsProps {
-  mode: 'signin' | 'signup'; // Add mode prop to differentiate login and register
+  mode: 'signin' | 'signup'; // Mode prop to differentiate between login and registration
 }
 
 const OAuthButtons: React.FC<OAuthButtonsProps> = ({ mode }) => {
@@ -15,8 +15,10 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ mode }) => {
   ];
 
   const handleOAuthSignIn = (providerId: string) => {
-    // Pass the mode as a query parameter to NextAuth
-    signIn(providerId, { callbackUrl: `/${mode}` });
+    signIn(providerId, {
+      callbackUrl: mode === 'signin' ? '/home' : '/signin',
+      state: mode, 
+    });
   };
 
   return (

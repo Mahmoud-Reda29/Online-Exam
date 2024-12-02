@@ -6,6 +6,8 @@ import { signIn } from "next-auth/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import NavigationButtons from "./NavigationButtons";
+import OAuthButtons from "./OAuthButtons";
 
 const SignUpFormSchema = z
   .object({
@@ -85,6 +87,9 @@ const SignUpForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-md bg-white rounded-lg p-10">
+      <div className="flex justify-end mb-4">
+        <NavigationButtons />
+      </div>
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">Sign Up</h2>
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {/* Username */}
@@ -239,6 +244,12 @@ const SignUpForm: React.FC = () => {
           Sign In
         </Link>
       </p>
+      <div className="flex items-center my-4">
+        <div className="flex-grow border-t border-gray-300"></div>
+        <span className="px-4 text-gray-500 text-sm">Or Continue with</span>
+        <div className="flex-grow border-t border-gray-300"></div>
+      </div>
+      <OAuthButtons mode="signup" />
     </div>
   );
 };

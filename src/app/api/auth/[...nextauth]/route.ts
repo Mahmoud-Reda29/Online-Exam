@@ -12,6 +12,9 @@ interface User {
   email?: string | null;
   image?: string | null;
 }
+interface Profile {
+    signup?: boolean; 
+  }
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -127,7 +130,7 @@ export const authOptions: NextAuthOptions = {
 
     async signIn({ user, account, profile }) {
       if (account?.provider !== "credentials" && user) {
-        const isSignup = (profile as any)?.signup; // Adjust this based on your OAuth provider's response
+        const isSignup = account?.state === "signup"; // Adjust this based on your OAuth provider's response
 
         if (isSignup) {
           try {
