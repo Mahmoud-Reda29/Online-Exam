@@ -1,6 +1,5 @@
-import React from "react";
 import Image from "next/image"; // Import Next.js Image component
-import NavigationButtons from "./NavigationButtons";
+
 type AuthLayoutProps = {
   children: React.ReactNode;
 };

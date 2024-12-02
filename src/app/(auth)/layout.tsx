@@ -1,5 +1,3 @@
-// src/app/(auth)/layout.tsx
-import React from "react";
 import AuthLayout from "../Components/auth/AuthLayout";
 
 
