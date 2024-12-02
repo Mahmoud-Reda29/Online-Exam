@@ -77,7 +77,7 @@ const SignUpForm: React.FC = () => {
         window.location.href = "/home"; // Redirect after successful signup
       }
     } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+      setError(err as string || "An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }

@@ -4,7 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import FacebookProvider from "next-auth/providers/facebook";
 import TwitterProvider from "next-auth/providers/twitter";
-import axios, { AxiosError } from 'axios';
+import axios from "axios";
 
 interface User {
   id: string;
@@ -67,9 +67,18 @@ export const authOptions: NextAuthOptions = {
             name: user.name || credentials.userName,
             email: user.email,
           };
-        } catch (error: any) {
-          console.error("Error during authentication:", error.response?.data || error.message);
-          throw new Error(error.response?.data?.message || "Authentication failed.");
+        } catch (error) {
+          if (error instanceof axios.AxiosError) {
+            console.error(
+              "Error during authentication:",
+              error.response?.data || error.message
+            );
+            throw new Error(
+              error.response?.data?.message || "Authentication failed."
+            );
+          } else {
+            throw error;
+          }
         }
       },
     }),
@@ -92,7 +101,7 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
@@ -128,9 +137,18 @@ export const authOptions: NextAuthOptions = {
               provider: account?.provider,
               providerId: account?.providerAccountId,
             });
-          } catch (error: unknown) {
-            console.error("OAuth registration error:", error as any);
-            throw new Error("Registration failed.");
+          } catch (error) {
+            if (error instanceof axios.AxiosError) {
+              console.error(
+                "OAuth registration error:",
+                error.response?.data || error.message
+              );
+              throw new Error(
+                error.response?.data?.message || "Authentication failed."
+              );
+            } else {
+              throw new Error("Registration failed.");
+            }
           }
         }
       }

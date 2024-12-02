@@ -63,7 +63,7 @@ const SignInForm: React.FC = () => {
       }
     } catch (err) {
       setIsLoading(false);
-      setError("An unexpected error occurred. Please try again.");
+      setError(err  as string || "An unexpected error occurred. Please try again.");
     }
   };
 

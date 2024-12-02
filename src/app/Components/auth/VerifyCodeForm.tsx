@@ -113,7 +113,7 @@ const VerifyCodeForm: React.FC = () => {
 
         {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
         <div className="flex justify-end mt-4">
-          <p className="text-xs text-gray-600 pr-1">Didn't receive a code? </p>
+          <p className="text-xs text-gray-600 pr-1">Didn&apos;t receive a code? </p>
           <button
             type="button"
             onClick={handleResendCode} // Trigger resend code
