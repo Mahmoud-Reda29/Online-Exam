@@ -40,7 +40,8 @@ const SignInForm: React.FC = () => {
     setIsLoading(true);
 
     try {
-        const response = await axios.put("/api/auth/resetpassword", { email: data.email, newPassword: data.newPassword });
+        const email = localStorage.getItem("email");
+        const response = await axios.put("/api/auth/resetpassword", { email: email, newPassword: data.newPassword });
     
         if (response.status === 200) {
           router.push("/signin");
